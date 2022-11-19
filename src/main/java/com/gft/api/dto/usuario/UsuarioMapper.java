@@ -7,11 +7,12 @@ public class UsuarioMapper {
 	public static Usuario fromUsuarioDTO( RegistroUsuarioDTO dto) {
 		
 		return new Usuario(null, dto.getEmail(),dto.getSenha()
-				, null);
+				, null, null, null);
 	}	
 	
 	public static ConsultaUsuarioDTO fromUsuario(Usuario usuario) {
 		
-		return new ConsultaUsuarioDTO(usuario.getId(), usuario.getEmail(), usuario.getPerfil().getNome()); 
+		return new ConsultaUsuarioDTO(usuario.getId(), usuario.getEmail(),
+				usuario.getPerfil().getNome(), usuario.getEtiquetas()); 
 	}
 }

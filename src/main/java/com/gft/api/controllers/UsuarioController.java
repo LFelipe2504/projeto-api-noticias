@@ -38,7 +38,8 @@ public class UsuarioController {
 	public ResponseEntity<Page<ConsultaUsuarioDTO>> buscarTodosOsUsuarios(
 			@PageableDefault(size = 10) Pageable pageable) {
 
-		Page<ConsultaUsuarioDTO> usuarioDTO = usuarioService.listarUsuarios(pageable).map(UsuarioMapper::fromUsuario);
+		Page<ConsultaUsuarioDTO> usuarioDTO = usuarioService.listarUsuarios(pageable)
+				.map(UsuarioMapper::fromUsuario);
 
 		return ResponseEntity.ok(usuarioDTO);
 	}
