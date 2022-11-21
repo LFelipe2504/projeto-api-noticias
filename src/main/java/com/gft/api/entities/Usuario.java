@@ -1,5 +1,6 @@
 package com.gft.api.entities;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,12 +25,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_usuario")
-public class Usuario {
+public class Usuario implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String email;
+	private String nome;
 	
 	private String senha;
 	
@@ -38,5 +47,37 @@ public class Usuario {
 	
 	@OneToOne(cascade =CascadeType.ALL)
 	private HistoricoUsuarioEtiqueta historico;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return  List.of(this.perfil);
+	}
+	@Override
+	public String getPassword() {
+		return getSenha();
+	}
+	@Override
+	public String getUsername() {
+		return getNome();
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }

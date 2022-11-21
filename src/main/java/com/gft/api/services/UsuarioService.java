@@ -6,6 +6,9 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.gft.api.entities.Usuario;
@@ -13,7 +16,7 @@ import com.gft.api.exception.UsuarioExisteException;
 import com.gft.api.repositories.UsuarioRepository;
 
 @Service
-public class UsuarioService{
+public class UsuarioService implements UserDetailsService{
 	
 	private final UsuarioRepository usuarioRepository;
 	
@@ -22,9 +25,9 @@ public class UsuarioService{
 	}
 	
 	
-	public Usuario buscarUsuarioPorEmail(String email) {
+	public Usuario buscarUsuarioPorNome(String nome) {
 		
-		return usuarioRepository.findByEmail(email).get();
+		return usuarioRepository.findByNome(nome).get();
 	}
 
 	public Usuario buscarUsuarioPorId(Long idUsuario) {
@@ -38,7 +41,7 @@ public class UsuarioService{
 	
 	public Usuario salvarUsuario(Usuario usuario) {
 		
-		Optional<Usuario> optional =usuarioRepository.findByEmail(usuario.getEmail());
+		Optional<Usuario> optional =usuarioRepository.findByNome(usuario.getNome());
 		
 		if(optional.isEmpty())
 			return usuarioRepository.save(usuario);
@@ -54,11 +57,13 @@ public class UsuarioService{
 		return this.salvarUsuario(usuario);		
 	}
 
-
 	public void deletarUsuario(Long id) {
 		Usuario usuario = this.buscarUsuarioPorId(id);	
 		usuarioRepository.delete(usuario);
 	}
 	
-	
+	@Override
+	public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
+		return buscarUsuarioPorNome(nome);
+	}
 }
