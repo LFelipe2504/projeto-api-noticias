@@ -1,5 +1,6 @@
 package com.gft.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.gft.api.entities.Etiqueta;
+import com.gft.api.entities.Usuario;
 import com.gft.api.repositories.EtiquetaRepository;
 
 @Service
@@ -16,8 +18,12 @@ public class EtiquetaService{
 	
 	private final EtiquetaRepository etiquetaRepository;
 	
-	public EtiquetaService(EtiquetaRepository etiquetaRepository) {
+	private final UsuarioService usuarioService;
+	
+	
+	public EtiquetaService(EtiquetaRepository etiquetaRepository, UsuarioService usuarioService) {
 		this.etiquetaRepository = etiquetaRepository;
+		this.usuarioService = usuarioService;
 	}
 	
 	
@@ -36,33 +42,43 @@ public class EtiquetaService{
 		return etiquetaRepository.findAll(pageable); 
 	}
 	
-	public Etiqueta salvarEtiqueta(Etiqueta etiqueta) {
+	public void salvarEtiqueta(Etiqueta etiqueta, Usuario usuario) {		
+		Optional<Etiqueta> optional = etiquetaRepository.findByNome(etiqueta.getNome());
 		
-		Optional<Etiqueta> optional =etiquetaRepository.findByNome(etiqueta.getNome());
-		
-		if(optional.isEmpty())
-			//fazer lógica para atribuir o usuário antes de salvar
-			return etiquetaRepository.save(etiqueta);
+		if(optional.isEmpty()) {			
+			etiquetaRepository.save(etiqueta);
 			
-		//fazer lógica para atribuir o usuário a etiqueta e depois de salvar
-		Etiqueta etiquetaExistente = optional.get();
+			List<Etiqueta> ListaEtiquetas = usuario.getEtiquetas(); 
+			ListaEtiquetas.add(etiqueta);
+			usuario.setEtiquetas(ListaEtiquetas);
+			
+			usuarioService.SalvarUsuarioSemVerificacao(usuario);
+			
+		}
 		
-		return null;
+		List<Etiqueta> ListaEtiquetas = usuario.getEtiquetas(); 
+		ListaEtiquetas.add(optional.get());
+		usuario.setEtiquetas(ListaEtiquetas);
+		
+		usuarioService.SalvarUsuarioSemVerificacao(usuario);		
+		
 	}
 	
-	public Etiqueta atualizarEtiqueta(Etiqueta etiqueta, Long id) {
-		Etiqueta etiquetaOriginal = this.buscarEtiquetaPorId(id);
+	public void deletarEtiqueta(Long id, Usuario usuario) {		
 		
-		etiquetaOriginal.setNome(etiqueta.getNome());
+		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorNome(usuario.getNome());
 		
-		return this.salvarEtiqueta(etiquetaOriginal);		
-	}
-
-
-	public void deletarEtiqueta(Long id) {
 		Etiqueta etiqueta = this.buscarEtiquetaPorId(id);	
-		etiquetaRepository.delete(etiqueta);
+		
+		List<Etiqueta> etiquetasDoUsuarioBuscado = usuarioBuscado.getEtiquetas();
+		
+		etiquetasDoUsuarioBuscado.remove(etiqueta);
+		
+		usuarioService.SalvarUsuarioSemVerificacao(usuarioBuscado);
+		
+		if(etiqueta.getUsuarios().isEmpty())
+			etiquetaRepository.delete(etiqueta);		
 	}
-	
+
 	
 }

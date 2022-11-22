@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -42,7 +45,11 @@ public class Usuario implements UserDetails{
 	@ManyToOne
 	private Perfil perfil;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			  name = "tb_usuario_etiqueta", 
+			  joinColumns = @JoinColumn(name = "usuario_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "etiqueta_id"))
 	private List<Etiqueta> etiquetas;
 	
 	@OneToOne(cascade =CascadeType.ALL)

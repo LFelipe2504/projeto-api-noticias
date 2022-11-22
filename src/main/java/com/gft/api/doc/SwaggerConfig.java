@@ -6,6 +6,8 @@ import java.util.HashSet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,6 +16,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
+@OpenAPIDefinition(security = {@SecurityRequirement(name = "bearer-key")})
 public class SwaggerConfig {
 	
 	private Contact contato() {
@@ -52,5 +55,7 @@ public class SwaggerConfig {
 
         return docket;
     }
+	
+	
 
 }

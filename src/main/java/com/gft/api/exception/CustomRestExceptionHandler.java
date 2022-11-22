@@ -31,9 +31,9 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ApiErrorDTO>(apiErrorDTO, new HttpHeaders(),apiErrorDTO.getStatus());
 	}
 	
-	@ExceptionHandler({UsuarioExisteException.class})
-	public ResponseEntity<ApiErrorDTO> handleUsuarioExisteException(UsuarioExisteException ex, WebRequest request){
-		String error = "Recurso não encontrado";
+	@ExceptionHandler({EntityExistException.class})
+	public ResponseEntity<ApiErrorDTO> handleEntityExistExceptionException(EntityExistException ex, WebRequest request){
+		String error = "Recurso já existe";
 		
 		ApiErrorDTO apiErrorDTO = new ApiErrorDTO(ex.getMessage(), error, HttpStatus.BAD_REQUEST);
 		

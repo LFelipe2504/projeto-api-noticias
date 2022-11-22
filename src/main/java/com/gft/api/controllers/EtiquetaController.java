@@ -4,11 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gft.api.dto.etiqueta.ConsultaEtiquetaDTO;
 import com.gft.api.dto.etiqueta.EtiquetaMapper;
 import com.gft.api.dto.etiqueta.RegistroEtiquetaDTO;
+import com.gft.api.dto.usuario.ConsultaUsuarioDTO;
+import com.gft.api.dto.usuario.UsuarioMapper;
 import com.gft.api.entities.Etiqueta;
+import com.gft.api.entities.Usuario;
 import com.gft.api.services.EtiquetaService;
 
 @RestController
@@ -49,32 +52,23 @@ public class EtiquetaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ConsultaEtiquetaDTO> salvarEtiqueta(@RequestBody RegistroEtiquetaDTO dto) {
+	public ResponseEntity<ConsultaUsuarioDTO> salvarEtiqueta(@RequestBody RegistroEtiquetaDTO dto,
+			@AuthenticationPrincipal Usuario usuario) {
 
 		Etiqueta etiqueta = EtiquetaMapper.fromEtiquetaDTO(dto);
 
-		etiquetaService.salvarEtiqueta(etiqueta);
+		etiquetaService.salvarEtiqueta(etiqueta, usuario);
 
-		return ResponseEntity.ok(EtiquetaMapper.fromEtiqueta(etiqueta));
-	}
-
-	@PutMapping("{id}")
-	public ResponseEntity<ConsultaEtiquetaDTO> alterarEtiqueta(@PathVariable Long id,
-			@RequestBody RegistroEtiquetaDTO dto) {
-
-		Etiqueta etiqueta = EtiquetaMapper.fromEtiquetaDTO(dto);
-
-		etiquetaService.atualizarEtiqueta(etiqueta, id);
-
-		return ResponseEntity.ok(EtiquetaMapper.fromEtiqueta(etiqueta));
+		return ResponseEntity.ok(UsuarioMapper.fromUsuario(usuario));
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<?> deletarEtiqueta(@PathVariable Long id) {
+	public ResponseEntity<ConsultaUsuarioDTO> deletarEtiqueta(@PathVariable Long id,
+			@AuthenticationPrincipal Usuario usuario) {
 
-		etiquetaService.deletarEtiqueta(id);
+		etiquetaService.deletarEtiqueta(id,usuario);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(UsuarioMapper.fromUsuario(usuario));
 	}
 
 }

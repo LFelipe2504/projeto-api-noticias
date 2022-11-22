@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.gft.api.entities.Usuario;
-import com.gft.api.exception.UsuarioExisteException;
+import com.gft.api.exception.EntityExistException;
 import com.gft.api.repositories.UsuarioRepository;
 
 @Service
@@ -41,12 +41,12 @@ public class UsuarioService implements UserDetailsService{
 	
 	public Usuario salvarUsuario(Usuario usuario) {
 		
-		Optional<Usuario> optional =usuarioRepository.findByNome(usuario.getNome());
+		Optional<Usuario> optional = usuarioRepository.findByNome(usuario.getNome());
 		
-		if(optional.isEmpty())
-			return usuarioRepository.save(usuario);
+		if(optional.isEmpty()) 
+			return usuarioRepository.save(usuario);		
 					
-		throw new UsuarioExisteException("Já existe usuário com esse e-mail");
+		throw new EntityExistException("Já existe usuário com esse nome");
 	}
 	
 	public Usuario atualizarUsuario(Usuario usuario, Long id) {
@@ -65,5 +65,10 @@ public class UsuarioService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
 		return buscarUsuarioPorNome(nome);
+	}
+
+
+	public Usuario SalvarUsuarioSemVerificacao(Usuario usuario) {
+		return usuarioRepository.save(usuario);
 	}
 }

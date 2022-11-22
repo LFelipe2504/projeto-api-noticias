@@ -2,7 +2,7 @@ package com.gft.api.dto.usuario;
 
 import java.util.List;
 
-import com.gft.api.entities.Etiqueta;
+import com.gft.api.dto.etiqueta.ConsultaEtiquetaDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +16,6 @@ public class ConsultaUsuarioDTO {
 	private Long id;
 	private String nome;
 	private String nomePerfil;
-	private List<Etiqueta> etiquetas;
+	private List<ConsultaEtiquetaDTO> etiquetas;
 	
 }
