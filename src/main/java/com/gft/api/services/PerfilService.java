@@ -1,10 +1,9 @@
 package com.gft.api.services;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 
 import com.gft.api.entities.Perfil;
+import com.gft.api.exception.EntityNotFoundException;
 import com.gft.api.repositories.PerfilRepository;
 
 @Service
