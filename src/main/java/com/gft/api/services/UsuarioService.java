@@ -1,8 +1,7 @@
 package com.gft.api.services;
 
+import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,17 +10,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.gft.api.entities.HistoricoUsuarioEtiqueta;
 import com.gft.api.entities.Usuario;
 import com.gft.api.exception.EntityExistException;
+import com.gft.api.exception.EntityNotFoundException;
+import com.gft.api.repositories.HistoricoUsuarioEtiquetaRepository;
 import com.gft.api.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService implements UserDetailsService{
 	
 	private final UsuarioRepository usuarioRepository;
+	private HistoricoUsuarioEtiquetaRepository historicoRepository; 
 	
-	public UsuarioService(UsuarioRepository usuarioRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository,
+			HistoricoUsuarioEtiquetaRepository historicoRepository) {
 		this.usuarioRepository = usuarioRepository;
+		this.historicoRepository = historicoRepository;
 	}
 	
 	
@@ -31,6 +36,7 @@ public class UsuarioService implements UserDetailsService{
 	}
 
 	public Usuario buscarUsuarioPorId(Long idUsuario) {
+		
 		return usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));		
 	}
@@ -58,7 +64,12 @@ public class UsuarioService implements UserDetailsService{
 	}
 
 	public void deletarUsuario(Long id) {
-		Usuario usuario = this.buscarUsuarioPorId(id);	
+		Usuario usuario = this.buscarUsuarioPorId(id);
+		
+		List<HistoricoUsuarioEtiqueta> historicoDoUsuario = historicoRepository.findAllByIdUsuario(usuario.getId());
+		
+		historicoDoUsuario.stream().forEach(h -> historicoRepository.delete(h));
+		
 		usuarioRepository.delete(usuario);
 	}
 	

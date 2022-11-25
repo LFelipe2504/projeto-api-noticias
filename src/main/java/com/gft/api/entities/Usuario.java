@@ -3,7 +3,6 @@ package com.gft.api.entities;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -50,10 +48,7 @@ public class Usuario implements UserDetails{
 			  name = "tb_usuario_etiqueta", 
 			  joinColumns = @JoinColumn(name = "usuario_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "etiqueta_id"))
-	private List<Etiqueta> etiquetas;
-	
-	@OneToOne(cascade =CascadeType.ALL)
-	private HistoricoUsuarioEtiqueta historico;
+	private List<Etiqueta> etiquetas;	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

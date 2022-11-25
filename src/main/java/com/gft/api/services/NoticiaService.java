@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.gft.api.dto.noticia.NoticiaDTO;
 import com.gft.api.entities.Etiqueta;
+import com.gft.api.entities.HistoricoUsuarioEtiqueta;
 import com.gft.api.entities.Noticias;
 import com.gft.api.entities.Usuario;
 import com.gft.api.exception.EntityNotFoundException;
@@ -20,23 +21,27 @@ import reactor.core.publisher.Mono;
 @Service
 public class NoticiaService {
 	
-	private WebClient webClientNoticia;	
-	
-	private final UsuarioService usuarioService;
+	private WebClient webClientNoticia;		
+	private final UsuarioService usuarioService;	
+	private final HistoricoUsuarioEtiquetaService historicoService;
+	private final EtiquetaService etiquetaService;
 	
 
-	public NoticiaService(WebClient webClientNoticia, UsuarioService usuarioService) {
+	public NoticiaService(WebClient webClientNoticia, UsuarioService usuarioService,
+			HistoricoUsuarioEtiquetaService historicoService, EtiquetaService etiquetaService) {
 		this.webClientNoticia = webClientNoticia;
 		this.usuarioService = usuarioService;
+		this.historicoService = historicoService;
+		this.etiquetaService = etiquetaService;
 	}
 	
 	
 
 	public List<NoticiaDTO> obterNoticias(Usuario usuario) {
-		
 		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorNome(usuario.getNome());
 		
 		List<Etiqueta> listaEtiquetasDoUsuario = usuarioBuscado.getEtiquetas();
+		
 		if(listaEtiquetasDoUsuario.isEmpty())
 			throw new EntityNotFoundException("Não há etiqueta cadastrada");
 		
@@ -45,6 +50,7 @@ public class NoticiaService {
 		List<NoticiaDTO> noticias = new ArrayList<>();
 		
 		for (Etiqueta etiqueta : listaEtiquetasDoUsuario) {
+			
 			
 			String nomeEtiqueta = etiqueta.getNome();
 			
@@ -58,9 +64,16 @@ public class NoticiaService {
 				if(n.getDate().equals(date)) {
 					noticias.add(n);
 				}
-			});
+			});	
 			
-		}
+			HistoricoUsuarioEtiqueta historicoUsuario = new HistoricoUsuarioEtiqueta(null, etiqueta.getNome(),
+					date, usuarioBuscado.getId());
+			historicoService.salvarHistoricoParaUsuario(historicoUsuario);
+			
+			etiqueta.setNumeroAcessos(etiqueta.getNumeroAcessos()+1);
+			etiquetaService.atualizarEtiqueta(etiqueta);
+			
+		}		
 		 
 		return noticias;
 	}

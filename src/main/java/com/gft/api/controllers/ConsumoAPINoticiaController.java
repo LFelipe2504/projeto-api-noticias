@@ -14,11 +14,11 @@ import com.gft.api.services.NoticiaService;
 
 @RestController
 @RequestMapping("/noticias")
-public class NoticiaController {
+public class ConsumoAPINoticiaController {
 	
 	private final NoticiaService noticiaService;
 
-	public NoticiaController(NoticiaService noticiaService) {
+	public ConsumoAPINoticiaController(NoticiaService noticiaService) {
 		this.noticiaService = noticiaService;
 	}
 	

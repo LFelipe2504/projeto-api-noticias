@@ -1,5 +1,6 @@
 package com.gft.api.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -12,8 +13,11 @@ import com.gft.api.entities.HistoricoUsuarioEtiqueta;
 @Repository
 public interface HistoricoUsuarioEtiquetaRepository extends JpaRepository<HistoricoUsuarioEtiqueta, Long>{
 	
-	Optional<HistoricoUsuarioEtiqueta> findByNome(String nome);
+	Optional<HistoricoUsuarioEtiqueta> findByNomeEtiqueta(String nome);
 	
 	Page<HistoricoUsuarioEtiqueta> findAll(Pageable pageable);
 	
+	Page<HistoricoUsuarioEtiqueta> findAllByIdUsuario(Pageable pageable, Long idUsuario);
+	
+	List<HistoricoUsuarioEtiqueta> findAllByIdUsuario(Long idUsuario);
 }

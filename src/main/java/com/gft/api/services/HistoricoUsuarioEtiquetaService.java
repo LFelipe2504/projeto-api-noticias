@@ -1,68 +1,38 @@
 package com.gft.api.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.http.HttpMethod;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.gft.api.dto.noticia.NoticiaDTO;
-import com.gft.api.entities.Etiqueta;
-import com.gft.api.entities.Noticias;
+import com.gft.api.entities.HistoricoUsuarioEtiqueta;
 import com.gft.api.entities.Usuario;
-import com.gft.api.exception.EntityNotFoundException;
-
-import reactor.core.publisher.Mono;
+import com.gft.api.repositories.HistoricoUsuarioEtiquetaRepository;
 
 @Service
 public class HistoricoUsuarioEtiquetaService {
 	
-	private WebClient webClientNoticia;	
-	
-	private final UsuarioService usuarioService;
-	
+	private HistoricoUsuarioEtiquetaRepository historicoRepository;		
 
-	public HistoricoUsuarioEtiquetaService(WebClient webClientNoticia, UsuarioService usuarioService) {
-		this.webClientNoticia = webClientNoticia;
-		this.usuarioService = usuarioService;
+	public HistoricoUsuarioEtiquetaService(HistoricoUsuarioEtiquetaRepository historicoRepository) {		
+		this.historicoRepository = historicoRepository;
 	}
-	
-	
 
-	public List<NoticiaDTO> obterNoticias(Usuario usuario) {
+
+	public Page<HistoricoUsuarioEtiqueta> buscarHistoricoAcessoUsuario(Pageable pageable, Usuario usuario) {
+		Page<HistoricoUsuarioEtiqueta> historicoDoUsuario = historicoRepository
+				.findAllByIdUsuario(pageable, usuario.getId());
 		
-		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorNome(usuario.getNome());
+		return historicoDoUsuario;
+	}
+
+	public Page<HistoricoUsuarioEtiqueta> buscarHistoricoAcessoDeTodosOsUsuarios(Pageable pageable) {
+		return historicoRepository.findAll(pageable);
+	}
+
+
+	public HistoricoUsuarioEtiqueta salvarHistoricoParaUsuario(HistoricoUsuarioEtiqueta historicoUsuario) {
+		return historicoRepository.save(historicoUsuario);
 		
-		List<Etiqueta> listaEtiquetasDoUsuario = usuarioBuscado.getEtiquetas();
-		if(listaEtiquetasDoUsuario.isEmpty())
-			throw new EntityNotFoundException("Não há etiqueta cadastrada");
-		
-		String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		
-		List<NoticiaDTO> noticias = new ArrayList<>();
-		
-		for (Etiqueta etiqueta : listaEtiquetasDoUsuario) {
-			
-			String nomeEtiqueta = etiqueta.getNome();
-			
-			Mono<Noticias> monoNoticia = this.webClientNoticia
-				.method(HttpMethod.GET)
-					.uri("/?q="+nomeEtiqueta+"&date="+date)
-					.retrieve()
-					.bodyToMono(Noticias.class);
-			
-			monoNoticia.block().getList().stream().forEach(n -> {
-				if(n.getDate().equals(date)) {
-					noticias.add(n);
-				}
-			});
-			
-		}
-		 
-		return noticias;
 	}
 
 }

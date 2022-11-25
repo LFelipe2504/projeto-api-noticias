@@ -2,6 +2,7 @@ package com.gft.api.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gft.api.dto.etiqueta.ConsultaEtiquetaComContagemDTO;
 import com.gft.api.dto.etiqueta.ConsultaEtiquetaDTO;
 import com.gft.api.dto.etiqueta.EtiquetaMapper;
 import com.gft.api.dto.etiqueta.RegistroEtiquetaDTO;
@@ -30,6 +32,16 @@ public class EtiquetaController {
 
 	public EtiquetaController(EtiquetaService etiquetaService) {
 		this.etiquetaService = etiquetaService;
+	}
+	
+	@GetMapping("/maisacessadas")
+	public ResponseEntity<Page<ConsultaEtiquetaComContagemDTO>> buscarEtiquetasMaisAcessadas(
+			@PageableDefault(size = 10, sort = "numeroAcessos", direction = Direction.DESC) Pageable pageable) {
+
+		Page<ConsultaEtiquetaComContagemDTO> etiquetasDTO = etiquetaService.listarEtiquetas(pageable)
+				.map(EtiquetaMapper::fromEtiquetaToContagemDTO);
+
+		return ResponseEntity.ok(etiquetasDTO);
 	}
 
 	@GetMapping
@@ -63,12 +75,12 @@ public class EtiquetaController {
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<ConsultaUsuarioDTO> deletarEtiqueta(@PathVariable Long id,
+	public ResponseEntity<?> deletarEtiqueta(@PathVariable Long id,
 			@AuthenticationPrincipal Usuario usuario) {
 
 		etiquetaService.deletarEtiqueta(id,usuario);
 
-		return ResponseEntity.ok(UsuarioMapper.fromUsuario(usuario));
+		return ResponseEntity.ok().build();
 	}
 
 }

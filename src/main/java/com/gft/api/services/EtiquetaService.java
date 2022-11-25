@@ -3,14 +3,15 @@ package com.gft.api.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.gft.api.dto.etiqueta.ConsultaEtiquetaComContagemDTO;
 import com.gft.api.entities.Etiqueta;
 import com.gft.api.entities.Usuario;
+import com.gft.api.exception.EntityExistException;
+import com.gft.api.exception.EntityNotFoundException;
 import com.gft.api.repositories.EtiquetaRepository;
 
 @Service
@@ -43,25 +44,29 @@ public class EtiquetaService{
 	}
 	
 	public void salvarEtiqueta(Etiqueta etiqueta, Usuario usuario) {		
-		Optional<Etiqueta> optional = etiquetaRepository.findByNome(etiqueta.getNome());
+		Optional<Etiqueta> optionalEtiqueta = etiquetaRepository.findByNome(etiqueta.getNome());
 		
-		if(optional.isEmpty()) {			
+		List<Etiqueta> listaEtiquetasDoUsuario = usuarioService
+				.buscarUsuarioPorId(usuario.getId())
+				.getEtiquetas();
+		
+		if(optionalEtiqueta.isEmpty()) {	
+			
 			etiquetaRepository.save(etiqueta);
 			
-			List<Etiqueta> ListaEtiquetas = usuario.getEtiquetas(); 
-			ListaEtiquetas.add(etiqueta);
-			usuario.setEtiquetas(ListaEtiquetas);
+			listaEtiquetasDoUsuario.add(etiqueta);
+			usuario.setEtiquetas(listaEtiquetasDoUsuario);
 			
 			usuarioService.SalvarUsuarioSemVerificacao(usuario);
 			
-		}
-		
-		List<Etiqueta> ListaEtiquetas = usuario.getEtiquetas(); 
-		ListaEtiquetas.add(optional.get());
-		usuario.setEtiquetas(ListaEtiquetas);
-		
-		usuarioService.SalvarUsuarioSemVerificacao(usuario);		
-		
+		}else if (!listaEtiquetasDoUsuario.contains(optionalEtiqueta.get())) {	
+			listaEtiquetasDoUsuario.add(optionalEtiqueta.get());
+			
+			usuario.setEtiquetas(listaEtiquetasDoUsuario);
+			
+			usuarioService.SalvarUsuarioSemVerificacao(usuario);		
+		}else 
+			throw new EntityExistException("Etiqueta já cadastrada.");					
 	}
 	
 	public void deletarEtiqueta(Long id, Usuario usuario) {		
@@ -80,5 +85,9 @@ public class EtiquetaService{
 			etiquetaRepository.delete(etiqueta);		
 	}
 
+
+	public Etiqueta atualizarEtiqueta(Etiqueta etiqueta) {		
+		return etiquetaRepository.save(etiqueta);
+	}
 	
 }

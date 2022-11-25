@@ -40,6 +40,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ApiErrorDTO>(apiErrorDTO, new HttpHeaders(),apiErrorDTO.getStatus());
 	}
 	
+	@ExceptionHandler({EtiquetaException.class})
+	public ResponseEntity<ApiErrorDTO> EtiquetaExceptionException(EtiquetaException ex, WebRequest request){
+		String error = "Recurso não encontrado";
+		
+		ApiErrorDTO apiErrorDTO = new ApiErrorDTO(ex.getMessage(), error, HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<ApiErrorDTO>(apiErrorDTO, new HttpHeaders(),apiErrorDTO.getStatus());
+	}
+	
 	
 //	@ExceptionHandler({AuthenticationException.class})
 //	public ResponseEntity<ApiErrorDTO> handleAuthenticationFailException(AuthenticationException ex, WebRequest request){

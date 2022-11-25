@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsultaEtiquetaDTO {
+public class ConsultaEtiquetaComContagemDTO {
 	
 	private Long id;
 	private String nome;
+	private int numeroAcessos;
 }
