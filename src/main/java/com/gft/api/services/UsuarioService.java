@@ -30,13 +30,11 @@ public class UsuarioService implements UserDetailsService{
 	}
 	
 	
-	public Usuario buscarUsuarioPorNome(String nome) {
-		
-		return usuarioRepository.findByNome(nome).get();
+	public Usuario buscarUsuarioPorEmail(String email) {		
+		return usuarioRepository.findByEmail(email).get();
 	}
 
-	public Usuario buscarUsuarioPorId(Long idUsuario) {
-		
+	public Usuario buscarUsuarioPorId(Long idUsuario) {		
 		return usuarioRepository.findById(idUsuario)
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));		
 	}
@@ -45,9 +43,8 @@ public class UsuarioService implements UserDetailsService{
 		return usuarioRepository.findAll(pageable); 
 	}
 	
-	public Usuario salvarUsuario(Usuario usuario) {
-		
-		Optional<Usuario> optional = usuarioRepository.findByNome(usuario.getNome());
+	public Usuario salvarUsuario(Usuario usuario) {		
+		Optional<Usuario> optional = usuarioRepository.findByEmail(usuario.getEmail());
 		
 		if(optional.isEmpty()) 
 			return usuarioRepository.save(usuario);		
@@ -74,8 +71,8 @@ public class UsuarioService implements UserDetailsService{
 	}
 	
 	@Override
-	public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
-		return buscarUsuarioPorNome(nome);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		return buscarUsuarioPorEmail(email);
 	}
 
 

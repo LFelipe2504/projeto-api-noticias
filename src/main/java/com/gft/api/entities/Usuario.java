@@ -36,7 +36,7 @@ public class Usuario implements UserDetails{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String email;
 	
 	private String senha;
 	
@@ -60,7 +60,7 @@ public class Usuario implements UserDetails{
 	}
 	@Override
 	public String getUsername() {
-		return getNome();
+		return getEmail();
 	}
 	@Override
 	public boolean isAccountNonExpired() {

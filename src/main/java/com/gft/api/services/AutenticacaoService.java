@@ -35,7 +35,7 @@ public class AutenticacaoService {
 	
 	@PostMapping
 	public TokenDTO autenticar(AutenticacaoDTO authForm) {
-		Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authForm.getNome(),
+		Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authForm.getEmail(),
 				authForm.getSenha()));
 		
 		String token = this.gerarToken(authentication);

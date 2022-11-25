@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ConsultaUsuarioDTO {
 	
 	private Long id;
-	private String nome;
+	private String email;
 	private String nomePerfil;
 	private List<ConsultaEtiquetaDTO> etiquetas;
 	

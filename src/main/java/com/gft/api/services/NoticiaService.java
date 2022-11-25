@@ -38,7 +38,7 @@ public class NoticiaService {
 	
 
 	public List<NoticiaDTO> obterNoticias(Usuario usuario) {
-		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorNome(usuario.getNome());
+		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorEmail(usuario.getEmail());
 		
 		List<Etiqueta> listaEtiquetasDoUsuario = usuarioBuscado.getEtiquetas();
 		

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.gft.api.dto.etiqueta.ConsultaEtiquetaComContagemDTO;
 import com.gft.api.entities.Etiqueta;
 import com.gft.api.entities.Usuario;
 import com.gft.api.exception.EntityExistException;
@@ -71,7 +70,7 @@ public class EtiquetaService{
 	
 	public void deletarEtiqueta(Long id, Usuario usuario) {		
 		
-		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorNome(usuario.getNome());
+		Usuario usuarioBuscado = usuarioService.buscarUsuarioPorEmail(usuario.getEmail());
 		
 		Etiqueta etiqueta = this.buscarEtiquetaPorId(id);	
 		

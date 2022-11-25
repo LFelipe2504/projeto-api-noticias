@@ -13,7 +13,7 @@ public class UsuarioMapper {
 
 	public static Usuario fromUsuarioDTO( RegistroUsuarioDTO dto) {
 		
-		return new Usuario(null, dto.getNome(),new BCryptPasswordEncoder().encode(dto.getSenha())
+		return new Usuario(null, dto.getEmail(),new BCryptPasswordEncoder().encode(dto.getSenha())
 				, null, null);
 	}	
 	
@@ -25,7 +25,7 @@ public class UsuarioMapper {
 		List<ConsultaEtiquetaDTO> consultaEtiquetasDto = usuario.getEtiquetas().stream()
 				.map(etiqueta -> EtiquetaMapper.fromEtiqueta(etiqueta)).toList();
 		
-		return new ConsultaUsuarioDTO(usuario.getId(), usuario.getNome(),
+		return new ConsultaUsuarioDTO(usuario.getId(), usuario.getEmail(),
 				usuario.getPerfil().getNome(),consultaEtiquetasDto); 
 	}
 }

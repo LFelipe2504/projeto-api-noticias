@@ -12,7 +12,7 @@ import com.gft.api.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
-	Optional<Usuario> findByNome(String nome);
+	Optional<Usuario> findByEmail(String email);
 	
 	Page<Usuario> findAll(Pageable pageable);
 	
