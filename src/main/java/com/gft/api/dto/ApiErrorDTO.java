@@ -16,15 +16,12 @@ public class ApiErrorDTO {
 	
 	private String message;
 	private List<String> errors;
-	private HttpStatus status;
-	
+	private HttpStatus status;	
 	
 	public ApiErrorDTO(String message, String error, HttpStatus status) {
 		this.message = message;
 		this.errors = Arrays.asList(error);
 		this.status = status;
 	}
-	
-	
 
 }

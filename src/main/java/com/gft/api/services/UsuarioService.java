@@ -43,18 +43,23 @@ public class UsuarioService implements UserDetailsService{
 		return usuarioRepository.findAll(pageable); 
 	}
 	
-	public Usuario salvarUsuario(Usuario usuario) {		
-		Optional<Usuario> optional = usuarioRepository.findByEmail(usuario.getEmail());
+	public Usuario salvarUsuario(Usuario usuario) {				
+		
+		Optional<Usuario> optional = usuarioRepository.findByEmail(usuario.getEmail());			
 		
 		if(optional.isEmpty()) 
 			return usuarioRepository.save(usuario);		
 					
-		throw new EntityExistException("Já existe usuário com esse nome");
+		throw new EntityExistException("Já existe usuário com esse e-mail");
 	}
 	
 	public Usuario atualizarUsuario(Usuario usuario, Long id) {
 		Usuario usuarioOriginal = this.buscarUsuarioPorId(id);
 		
+		usuario.setPerfil(usuarioOriginal.getPerfil());
+		
+		usuario.setEtiquetas(usuarioOriginal.getEtiquetas());
+				
 		usuario.setId(usuarioOriginal.getId());
 		
 		return this.salvarUsuario(usuario);		

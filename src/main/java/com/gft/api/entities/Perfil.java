@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -21,7 +22,9 @@ public class Perfil implements GrantedAuthority{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
+	
+	@NotBlank(message = "O nome do perfil não pode ser nulo ou em branco") 
 	private String nome;
 	
 	@Override

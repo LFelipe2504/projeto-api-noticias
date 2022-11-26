@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS `tb_usuario` (
 
 -- Copiando dados para a tabela api-noticias.tb_usuario: ~2 rows (aproximadamente)
 INSERT INTO `tb_usuario` (`id`, `email`, `senha`, `perfil_id`) VALUES
-	(1, 'adm@gft.com', '$2a$10$3hSmDUT9KL6j.CAOFG1EO.HHcvFlugQ2STxGo9T2hmrBVhu9UB51u', 1),
-	(2, 'usuario@gft.com', '$2a$10$3hSmDUT9KL6j.CAOFG1EO.HHcvFlugQ2STxGo9T2hmrBVhu9UB51u', 2);
+	(1, 'adm@gft.com', '$2a$10$8b2Bt0Ni7bcKiTsfEMGYK.SBUj7tdGJPV9h19odQ.4w/w33h1bWuG', 1),
+	(2, 'usuario@gft.com', '$2a$10$8b2Bt0Ni7bcKiTsfEMGYK.SBUj7tdGJPV9h19odQ.4w/w33h1bWuG', 2);
 
 -- Copiando estrutura para tabela api-noticias.tb_usuario_etiqueta
 CREATE TABLE IF NOT EXISTS `tb_usuario_etiqueta` (

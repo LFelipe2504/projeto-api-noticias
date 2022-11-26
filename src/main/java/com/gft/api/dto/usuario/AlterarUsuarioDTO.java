@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistroUsuarioDTO {
+public class AlterarUsuarioDTO {
 	
 	private String email;	
 	private String senha;	
-	private long perfilId;
 }

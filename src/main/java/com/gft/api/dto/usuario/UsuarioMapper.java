@@ -15,7 +15,13 @@ public class UsuarioMapper {
 		
 		return new Usuario(null, dto.getEmail(),new BCryptPasswordEncoder().encode(dto.getSenha())
 				, null, null);
-	}	
+	}
+	
+public static Usuario fromAlterarUsuarioDTO( AlterarUsuarioDTO dto) {
+		
+		return new Usuario(null, dto.getEmail(),new BCryptPasswordEncoder().encode(dto.getSenha())
+				, null, null);
+	}
 	
 	public static ConsultaUsuarioDTO fromUsuario(Usuario usuario) {
 		
