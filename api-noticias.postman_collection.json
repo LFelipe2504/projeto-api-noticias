@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "05fce564-28ba-4815-b7b9-7ffb106d85e6",
+		"name": "api-noticias",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"usuario@gft.com\",\r\n  \"senha\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "noticias",
+			"item": [
+				{
+					"name": "consumo api",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyNzI4fQ.VANO-ywDDiBXHyVBWgzAA6nfv9qHTQ56WQhzSK8TLv4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/noticias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"noticias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "histórico de etiquetas do usuário",
+			"item": [
+				{
+					"name": "buscar histórico do usuário logado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/historico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historico"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuário",
+			"item": [
+				{
+					"name": "buscar todos os usuários",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDM3MTYxfQ.rP-ayYlIqERMUpHXqRf1XjxjnHmy0y2gZcDI_Nn4NVw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar usuário logado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios/usuariologado",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"usuariologado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDM2MzgwfQ.KVPn6D5JlcHgDizL8VUG4EkCEtgq7xcnCqGYJ43QjC0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"adm1@gft.com\",\r\n  \"senha\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDM3NTY1fQ.Pd0I2WQpl9oBTTnSIIVuNElxiyqL7mfuT9JxapjBu2c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDM3MTYxfQ.rP-ayYlIqERMUpHXqRf1XjxjnHmy0y2gZcDI_Nn4NVw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"usuario21@gft.com\",\r\n  \"perfilId\": 2,\r\n  \"senha\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Etiqueta",
+			"item": [
+				{
+					"name": "buscar todas as etiquetas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/etiquetas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "etiquetas mais acessadas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/etiquetas/maisacessadas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"etiquetas",
+								"maisacessadas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar etiqueta por id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/etiquetas/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"etiquetas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletar etiqueta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/etiquetas/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"etiquetas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar etiqueta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaXNzIjoiYXBpLW5vdGljaWFzIiwiZXhwIjoxNjY5NDQyMDU0fQ.ou32xnnkcfNCyVNdhDxsDuo57GVR7lBg2gEf7EFKGqk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"argentina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/etiquetas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
